@@ -1,0 +1,42 @@
+<version> ::= "TAP version 13\n"
+
+<test> ::= <header> <test-set>
+
+<header> ::= <comment>* <version> <comment>*
+
+<comment> ::= "#" <text>* "\n"
+
+<test-set> ::= <plan> <test-point>* [<bailout>]
+             | <test-point>* <bailout>
+             | <test-point>* <plan>
+
+<bailout> ::= "Bail out!" [" " <text>*] "\n"
+
+<plan> ::= <integer> ".." <integer> [" # " <text>] "\n"
+
+<test-point> ::= <assert-line> [<diags>]
+
+<assert-line> ::= <passing> [" " <integer>] <text> [<directive>] "\n"
+
+<directive> ::= <skip> | <todo>
+
+<skip> ::= "#" " "* <skip-word> [<text>]
+
+<todo> ::= "#" " "* <todo-word> [<text>]
+
+<skip-word> ::= "SKIP" | "skip"
+
+<todo-word> ::= "TODO" | "todo"
+
+<integer> ::= "0" | <non-zero-digit> <digit>*
+
+<number> ::= <integer> ["." <digit>*]
+
+<non-zero-digit> ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+<digit> ::= "0" | <non-zero-digit>
+
+
+<diags> ::= "  ---\n" <yaml>* "  ...\n"
+
+<yaml> ::= "  " <yaml-line> "\n"
